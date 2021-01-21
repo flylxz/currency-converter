@@ -28,7 +28,7 @@ export const CurrencyList = observer(() => {
       <List>
         {Currency.currencyList.map((item) => (
           <ListItem divider={true} key={item.name}>
-            {item.name} - {item.rate}x{base} Favorite{' '}
+            {item.name} - {item.rate}x{base} Favorite
             <Checkbox
               type='checkbox'
               checked={item.isFav}
