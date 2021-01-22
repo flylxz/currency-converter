@@ -60,14 +60,19 @@ class Currency {
   };
 
   setFav = (name) => {
-    this.currencyList = this.currencyList
+    this.currencyList = [...this.currencyList]
       .map((item) =>
         item.name === name ? { ...item, isFav: !item.isFav } : item
       )
       .sort((a, b) => {
         return b.isFav - a.isFav;
       });
-    // this.favList = this.currencyList.map((item) => console.log(item));
+
+    if (this.favList.includes(name)) {
+      this.favList = this.favList.filter((item) => item !== name);
+    } else {
+      this.favList = [...this.favList, name];
+    }
   };
 
   setFromCurrency = (value) => (this.fromCurrency = value);
@@ -97,7 +102,7 @@ class Currency {
   };
 
   _favChecker = (arr) => {
-    return arr
+    return [...arr]
       .map((item) =>
         this.favList.includes(item.name) ? { ...item, isFav: true } : item
       )

@@ -10,10 +10,18 @@ export const CurrencyList = observer(() => {
     if (localStorage.getItem('baseCurrency')) {
       Currency.setBaseCurrency(localStorage.getItem('baseCurrency'));
     }
+    if (localStorage.getItem('favList')) {
+      Currency.favList = JSON.parse(localStorage.getItem('favList'));
+    }
     if (!Currency.currencyList.length) {
       Currency.fetchCurrencyList();
     }
+    Currency._favChecker(Currency.currencyList);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('favList', JSON.stringify(Currency.favList));
+  }, [Currency.favList]);
 
   const base = Currency.base;
 

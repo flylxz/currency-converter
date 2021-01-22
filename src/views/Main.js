@@ -15,6 +15,10 @@ export const Main = observer(() => {
     if (!Currency.currencyList.length) {
       Currency.fetchCurrencyList();
     }
+    if (localStorage.getItem('favList')) {
+      Currency.favList = JSON.parse(localStorage.getItem('favList'));
+    }
+    Currency._favChecker(Currency.currencyList);
   }, []);
 
   useEffect(() => {
