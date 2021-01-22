@@ -1,15 +1,18 @@
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { List, ListItem, Checkbox, Typography } from '@material-ui/core';
+import { Grid, List, Typography, Paper, Box } from '@material-ui/core';
 
 import Currency from '../store/Currency';
+import { ListItemComponent } from '../components';
 
 export const CurrencyList = observer(() => {
   useEffect(() => {
     if (localStorage.getItem('baseCurrency')) {
       Currency.setBaseCurrency(localStorage.getItem('baseCurrency'));
     }
-    Currency.fetchCurrencyList();
+    if (!Currency.currencyList.length) {
+      Currency.fetchCurrencyList();
+    }
   }, []);
 
   const base = Currency.base;
@@ -23,21 +26,30 @@ export const CurrencyList = observer(() => {
   }
 
   return (
-    <div>
-      <Typography variant='h4'>Base currency: {base}</Typography>
-      <List>
-        {Currency.currencyList.map((item) => (
-          <ListItem divider={true} key={item.name}>
-            {item.name} - {item.rate}x{base} Favorite
-            <Checkbox
-              type='checkbox'
-              checked={item.isFav}
-              color='primary'
-              onChange={() => Currency.setFav(item.name)}
-            />
-          </ListItem>
-        ))}
-      </List>
-    </div>
+    <Grid
+      container
+      my={2}
+      direction='column'
+      justify='center'
+      alignItems='center'
+    >
+      <Grid item>
+        <Paper elevation={2}>
+          <Box m={3}>
+            <Typography variant='h4'>Base currency: {base}</Typography>
+          </Box>
+          <List>
+            {Currency.currencyList.map((item) => (
+              <ListItemComponent
+                key={item.name}
+                base={base}
+                setFav={Currency.setFav}
+                item={item}
+              />
+            ))}
+          </List>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 });

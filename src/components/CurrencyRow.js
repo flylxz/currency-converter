@@ -1,4 +1,12 @@
-import { Box, Checkbox, Typography } from '@material-ui/core';
+import {
+  Box,
+  Checkbox,
+  FormControl,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 
 export const CurrencyRow = (props) => {
   const {
@@ -12,27 +20,32 @@ export const CurrencyRow = (props) => {
   } = props;
 
   return (
-    <Box display='flex' alignItems='center'>
-      <input
-        type='number'
-        className='input'
-        value={amount}
-        onChange={onChangeAmount}
-      />
-      <select value={selectedCurrency} onChange={onChangeCurrency}>
-        {currencyOptions.map((option) => (
-          <option key={option.name} value={option.name}>
-            {option.name}
-          </option>
-        ))}
-      </select>
-      <Checkbox
-        type='checkbox'
-        checked={base === selectedCurrency}
-        color='primary'
-        onChange={() => setBaseCurrency(selectedCurrency)}
-      />
-      <Typography>Set base currency</Typography>
+    <Box display='flex' flexDirection='column' alignItems='center'>
+      <FormControl>
+        <TextField
+          type='number'
+          className='input'
+          label='Amount'
+          value={amount}
+          onChange={onChangeAmount}
+        />
+        <Select value={selectedCurrency} onChange={onChangeCurrency}>
+          {currencyOptions.map((option) => (
+            <MenuItem key={option.name} value={option.name}>
+              {option.name}
+            </MenuItem>
+          ))}
+        </Select>
+        <Box display='flex' alignItems='center'>
+          <Checkbox
+            type='checkbox'
+            checked={base === selectedCurrency}
+            color='primary'
+            onChange={() => setBaseCurrency(selectedCurrency)}
+          />
+          <Typography>Set base currency</Typography>
+        </Box>
+      </FormControl>
     </Box>
   );
 };

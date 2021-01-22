@@ -19,8 +19,6 @@ class Currency {
   }
 
   fetchCurrencyList = async () => {
-    this.currencyList = {};
-    this.toCurrency = '';
     this.state = 'pending';
     try {
       const data = await ExchangeRatesApi.getResource(this.base);
@@ -47,7 +45,7 @@ class Currency {
       );
       runInAction(() => {
         this.exchangeRate = data.rates[0].rate;
-        this._handleAmountCalculete();
+        this._handleAmountCalculate();
       });
     } catch (e) {
       runInAction(() => {
@@ -58,7 +56,6 @@ class Currency {
   };
 
   setBaseCurrency = (name) => {
-    console.log(name);
     this.base = name;
   };
 
@@ -70,8 +67,7 @@ class Currency {
       .sort((a, b) => {
         return b.isFav - a.isFav;
       });
-    // this.favList = this.currencyList.map((item) => item.name);
-    console.log(this.favList);
+    // this.favList = this.currencyList.map((item) => console.log(item));
   };
 
   setFromCurrency = (value) => (this.fromCurrency = value);
@@ -81,16 +77,16 @@ class Currency {
   handleFromAmountChange = (e) => {
     this.amount = e.target.value;
     this.amountInFromCurrency = true;
-    this._handleAmountCalculete();
+    this._handleAmountCalculate();
   };
 
   handleToAmountChange = (e) => {
     this.amount = e.target.value;
     this.amountInFromCurrency = false;
-    this._handleAmountCalculete();
+    this._handleAmountCalculate();
   };
 
-  _handleAmountCalculete = () => {
+  _handleAmountCalculate = () => {
     if (this.amountInFromCurrency) {
       this.fromAmount = +this.amount;
       this.toAmount = +(this.amount * this.exchangeRate);

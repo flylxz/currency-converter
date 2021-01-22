@@ -1,17 +1,19 @@
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Container } from '@material-ui/core';
+import { Container, CssBaseline } from '@material-ui/core';
+import 'fontsource-roboto';
 
 import { Header } from './components';
 import { Routes } from './routes';
 
 function App() {
   return (
-    <Container fixed>
-      <Router>
-        <Header />
+    <Router>
+      <Header />
+      <CssBaseline />
+      <Container fixed>
         <Routes />
-      </Router>
-    </Container>
+      </Container>
+    </Router>
   );
 }
 
